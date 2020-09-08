@@ -23,7 +23,7 @@ frame.on("ready", function () {
 
     var holder = new Container();
 
-    var tiles = new Tile(new Rectangle(70, 70, frame.light, frame.dark).centerReg(), 8, 8)
+    var tiles = new Tile(new Rectangle(70, 70, frame.light, frame.dark).centerReg(), 6, 6)
         .rot(45)
         .addTo(holder)
         .outline()
@@ -38,22 +38,102 @@ frame.on("ready", function () {
         stage.update();
     })
 
-    var ball = new Circle(40, frame.blue, frame.dark).center().sha();
-    tiles.on("click", function (e) {
-        var point = tiles.localToGlobal(e.target.x, e.target.y)
-        ball.animate({
-            obj: {
-                x: point.x,
-                y: point.y
-            },
-            time: 1,
-            events: true
+    // var ball = new Circle(40, frame.blue, frame.dark).center().sha();
+
+    // tiles.on("click", function (e) {
+    //     console.log('check check')
+    //     var point = tiles.localToGlobal(e.target.x, e.target.y)
+    //     token2.animate({
+    //         obj: {
+    //             x: point.x,
+    //             y: point.y
+    //         },
+    //         time: 1,
+    //         events: true
+    //     });
+    //     stage.update();
+    // })
+    //     ;
+
+
+
+    class Token extends Circle {
+        constructor(size, color, border, attack, health, team) {
+            super(size, color, border)
+            this.attack = attack
+            this.health = health
+            this.team = team
+
+        }
+        whoAmI() {
+            console.log(this.team)
+        }
+        moveToken(e) {
+
+            var point = tiles.localToGlobal(e.target.x, e.target.y)
+            this.animate({
+                obj: {
+                    x: point.x,
+                    y: point.y
+                },
+                time: 1,
+                events: true
+            });
+            stage.update();
+        }
+    }
+
+
+    let token = new Token(30, frame.red, frame.dark, 15, 30, "red").center();
+    let token2 = new Token(70, frame.blue, frame.dark, 15, 30, "blue").center();
+    let tokenArray = [token, token2]
+    tokenArray.map(v => {
+
+    })
+    window.token = token
+    token.on("click", function (e) {
+        this.whoAmI()
+
+        tiles.on("click", function (e) {
+            console.log('check check')
+            var point = tiles.localToGlobal(e.target.x, e.target.y)
+            token.animate({
+                obj: {
+                    x: point.x,
+                    y: point.y
+                },
+                time: 1,
+                events: true
+            });
+            stage.update();
+            tiles.unbind("click")
         });
-        stage.update();
-    });
+
+
+    })
+
+    token2.on("click", function (e) {
+        this.whoAmI()
+        tiles.on("click", function (e) {
+            console.log('check check')
+            var point = tiles.localToGlobal(e.target.x, e.target.y)
+            token2.animate({
+                obj: {
+                    x: point.x,
+                    y: point.y
+                },
+                time: 1,
+                events: true
+            });
+            stage.update();
+            tiles.off("click")
+        });
+
+
+    })
     var proportion = new Proportion(0, stageH, .8, 1.3);
-    ball.on("animation", function () {
-        ball.sca(proportion.convert(ball.y));
+    token2.on("animation", function () {
+        token2.sca(proportion.convert(token2.y));
     });
 
     stage.update();
