@@ -6,6 +6,11 @@ var width = 1280;
 var height = 960;
 var hero = ["img/arn1.png"]
 var frame = new Frame(scaling, width, height);
+let token = {}
+let token3 = {}
+let token4 = {}
+let token2 = {}
+
 frame.on("ready", function () {
     zog("ready from ZIM Frame");
     var stage = frame.stage;
@@ -28,9 +33,32 @@ frame.on("ready", function () {
         e.target.color = frame.light;
         stage.update();
     })
+
+    function updateBoard() {
+        let score = document.querySelector('#evil-scoreboard')
+        let score2 = document.querySelector('#good-scoreboard')
+        score.innerHTML = ``
+        score2.innerHTML = ``
+        for (let token of tokenArray) {
+            if (token.health <= 0) {
+                tokenArray.remove(tokenArray.indexOf(token))
+            }
+            if (token.team == "evil") {
+                score.innerHTML += `<li>name:${token.name} Health:${token.health}  Attack:${token.attack} </li>`
+            }
+            else {
+                score2.innerHTML += `<li>name:${token.name} Health:${token.health}  Attack:${token.attack} </li>`
+            }
+
+        }
+        // for (i=0; i<tokenArray.length; i++) {
+        //     if (tokenArray[i].health)
+        // }
+    }
     class Token extends Circle {
-        constructor(size, color, border, attack, health, team) {
+        constructor(size, color, border, name, attack, health, team) {
             super(size, color, border)
+            this.name = name
             this.attack = attack
             this.health = health
             this.team = team
@@ -42,6 +70,16 @@ frame.on("ready", function () {
                 token.active = false
             }
             this.active = true//!this.active
+        }
+        dealDamage() {
+            return this.attack
+        }
+        receiveDamage(dmg) {
+            this.health -= dmg;
+            if (this.health > 0) {
+                console.log(`${this.name} received ${dmg} points of damage!`)
+            } else { console.log(`${this.name} has died! RIP.`) }
+            updateBoard()
         }
         moveToken(e) {
             var point = tiles.localToGlobal(e.target.x, e.target.y)
@@ -60,12 +98,16 @@ frame.on("ready", function () {
             stage.update();
         }
     }
-    let token = new Token(40, frame.red, frame.dark, 15, 30, "red").center();
-    let token3 = new Token(35, frame.purple, frame.dark, 15, 30, "purple").center();
-    let token4 = new Token(30, frame.green, frame.dark, 15, 30, "green").center();
-    let token2 = new Token(25, frame.blue, frame.dark, 15, 30, "blue").center();
+
+    token = new Token(40, frame.red, frame.dark, "red ball", 15, 30, "evil").center();
+    token3 = new Token(35, frame.purple, frame.dark, "purple ball", 15, 30, "evil").center();
+    token4 = new Token(30, frame.green, frame.dark, "green ball", 15, 30, "good").center();
+    token2 = new Token(25, frame.blue, frame.dark, "blue ball", 15, 30, "good").center();
     var proportion = new Proportion(0, stageH, .8, 1.3);
     let tokenArray = [token, token2, token3, token4]
+    updateBoard()
+
+    // token.receiveDamage(token3.dealDamage())
     // lets add our events in this loop
     for (let token of tokenArray) {
         // create a click event on token to set it to become active
@@ -87,6 +129,10 @@ frame.on("ready", function () {
             token.active = false
         }
     })
+
+
+
+
     function collisionDetection() {
         for (let token of tokenArray) {
             for (let tile of tiles.children) {
