@@ -26,7 +26,11 @@ frame.on("ready", function () {
         .outline()
     holder.sca(2, 1).center();
     window.tiles = tiles
+    tiles.on('click',function (e){
+        console.log(e)
+    })
     tiles.on("mouseover", function (e) {
+        
         e.target.color = frame.grey;
         stage.update();
     })
@@ -45,13 +49,15 @@ frame.on("ready", function () {
             this.active = false
             this.hero = true
             this.image = image
+            this.position={x:0,y:0}
         }
         whoAmI() {
-            console.log(this.team)
+            console.log(this.name,this.position)
             for (let token of tokenArray) {
                 token.active = false
             }
             this.active = true//!this.active
+            document.querySelector('#whoami').innerHTML=this.name
         }
         dealDamage() {
             return this.attack
@@ -67,6 +73,7 @@ frame.on("ready", function () {
             console.log(this.image.width, this.image.height)
             var point = tiles.localToGlobal(e.target.x, e.target.y)
             console.log(point)
+            this.position={x:point.x,y:point.y}
             this.animate({
                 obj: {
                     x: point.x - 60,
@@ -91,6 +98,7 @@ frame.on("ready", function () {
             this.health = health
             this.team = team
             this.active = false
+            this.position= {x:0,y:0}
         }
         whoAmI() {
             console.log(this.team)
@@ -98,6 +106,7 @@ frame.on("ready", function () {
                 token.active = false
             }
             this.active = true//!this.active
+            document.querySelector('#whoami').innerHTML=this.name
         }
         dealDamage() {
             return this.attack
@@ -112,6 +121,7 @@ frame.on("ready", function () {
         moveToken(e) {
             var point = tiles.localToGlobal(e.target.x, e.target.y)
             console.log(point)
+            this.position={x:point.x,y:point.y}
             this.animate({
                 obj: {
                     x: point.x,
@@ -202,8 +212,9 @@ frame.on("ready", function () {
     function collisionDetection() {
         for (let token of tokenArray) {
             for (let tile of tiles.children) {
-                console.log(token, tile)
+                console.log(token, tile, token.name, token._bounds,tile._bounds)
                 tile.color = frame.red
+                break
             }
         }
     }
@@ -213,3 +224,4 @@ frame.on("ready", function () {
     // });
     stage.update();
 });
+
