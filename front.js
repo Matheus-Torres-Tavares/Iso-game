@@ -70,6 +70,7 @@ frame.on("ready", function () {
                 token.active = false
             }
             this.active = true//!this.active
+            document.querySelector('#whoami').innerHTML=JSON.stringify(this)
         }
         dealDamage() {
             return this.attack
@@ -98,6 +99,12 @@ frame.on("ready", function () {
             stage.update();
         }
     }
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+      }
+      
+      // Close the dropdown menu if the user clicks outside of it
+     
 
     token = new Token(40, frame.red, frame.dark, "red ball", 15, 30, "evil").center();
     token3 = new Token(35, frame.purple, frame.dark, "purple ball", 15, 30, "evil").center();
@@ -107,7 +114,7 @@ frame.on("ready", function () {
     let tokenArray = [token, token2, token3, token4]
     updateBoard()
 
-    // token.receiveDamage(token3.dealDamage())
+   
     // lets add our events in this loop
     for (let token of tokenArray) {
         // create a click event on token to set it to become active
