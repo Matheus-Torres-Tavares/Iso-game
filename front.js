@@ -209,12 +209,15 @@ frame.on("ready", function () {
         var goodHero = new Fighter(gHeroImg, 8, 1, "Arngrim, Champion of the Gauntlet", 25, 30, "good", 105, 110).center().animate({ loop: true }).sca(1.5).run({ time: 0.8, loop: true });
         window.goodHero = goodHero
         goodHero.moveToken({ target: { x: 40, y: 45, tileCol: 0, tileRow: 0 } });
-        // var goodMage = new Hero(gMageImg, 4, 1, "Laurel, Sorceress Supreme", 25, 30, "good", 65, 90).center().animate({ loop: true }).sca(1.5).run({ time: 0.6, loop: true });
-        // window.goodMage = goodMage
+        var goodMage = new Hero(gMageImg, 4, 1, "Laurel, Sorceress Supreme", 25, 30, "good", 65, 90).center().animate({ loop: true }).sca(1.5).run({ time: 0.6, loop: true });
+        window.goodMage = goodMage
+        goodMage.moveToken({ target: { x: 70, y: 320, tileCol: 1, tileRow: 6 } });
         // var goodRanger = new Hero(gRangerImg, 4, 1, "Freiya, Arcane Archer", 25, 30, "good", 70, 110).center().animate({ loop: true }).sca(1.5).run({ time: 0.6, loop: true });
         // window.goodRanger = goodRanger
-        // var goodHealer = new Hero(gHealerImg, 4, 1, "Priestess of the Light", 25, 30, "good", 65, 95).center().animate({ loop: true }).sca(1.5).run({ time: 0.6, loop: true });
-        // window.goodHealer = goodHealer
+        var goodHealer = new Hero(gHealerImg, 4, 1, "Priestess of the Light", 25, 30, "good", 65, 95).center().animate({ loop: true }).sca(1.5).run({ time: 0.6, loop: true });
+        window.goodHealer = goodHealer
+        goodHealer.moveToken({ target: { x: 170, y: 320, tileCol: 3, tileRow: 6 } });
+        goodMage.moveToken({ target: { x: 70, y: 320, tileCol: 1, tileRow: 6 } });
         var evilHero = new Hero(eHeroImg, 4, 1, "Paragon of Darkness", 25, 30, "evil", 108, 105).center().animate({ loop: true }).sca(1.5).run({ time: 0.8, loop: true });
         window.evilHero = evilHero
         evilHero.moveToken({ target: { x: 90, y: 95, tileCol: 1, tileRow: 1 } });
@@ -224,23 +227,19 @@ frame.on("ready", function () {
         // window.evilRanger = evilRanger
         // var evilHealer = new Hero(eHealerImg, 4, 1, "Hera, Defiler of Streams", 25, 30, "evil", 87, 105).center().animate({ loop: true }).sca(1.5).run({ time: 0.8, loop: true });
         // window.evilHealer = evilHealer
-        token1 = new Token(20, frame.blue, frame.dark, "blue ball", 15, 30, "evil").center();
-        token1.moveToken({ target: { x: 380, y: 380, tileCol: 7, tileRow: 7 } });
-        var token = new Token(30, frame.red, frame.dark, "red ball", 15, 30, "evil").center();
-        // console.log('hwl')
         // console.log(frame.assets, typeof frame.assets, Object.keys(frame.assets).length)
         if (heroAssets < 9) {
             // return
         } else {
             console.log("I've reached my final form")
-            tokenArray.push(goodHero, evilHero, token1, token)
+            tokenArray.push(goodHero, goodMage, goodMage, evilHero)
             // tokenArray.push(goodHero, goodMage, goodRanger, goodHealer, evilHero, evilMage, evilRanger, evilHealer)
         }
         // }
         background.center()
 
 
-        // asset("img/background1.jpg").center();
+
 
 
 
@@ -250,81 +249,6 @@ frame.on("ready", function () {
         updateBoard()
 
 
-        //     whoAmI() {
-        //       console.log(this.name, this.cool, this);
-        //       for (let token of tokenArray) {
-        //         token.active = false;
-        //       }
-        //       this.active = true; //!this.active
-        //       seeMoveOptions(this);
-        //       seeAttackOptions(this);
-        //       document.querySelector("#whoami").innerHTML = this.name;
-        //     }
-        //     dealDamage() {
-        //       //   if (this.canMovehere) {
-
-        //       return this.attack;
-        //       //   } else {
-        //       //     alert("Enemy is too far");
-        //       //   }
-        //     }
-        //     receiveDamage(dmg) {
-        //       if (!this.inRange) {
-        //         alert("You're out of range");
-        //         return;
-        //       }
-        //       this.health -= dmg;
-        //       if (this.health > 0) {
-        //         console.log(`${this.name} received ${dmg} points of damage!`);
-        //       } else {
-        //         console.log(`${this.name} has died! RIP.`);
-        //       }
-        //       updateBoard();
-        //     }
-        //     moveToken(e) {
-        //       console.log(this.image.width, this.image.height, e.target);
-        //       var point = tiles.localToGlobal(e.target.x, e.target.y);
-        //       console.log(point);
-        //       this.position = { x: e.target.tileCol, y: e.target.tileRow };
-        //       this.animate({
-        //         obj: {
-        //           x: point.x - 60,
-        //           y: point.y - 80,
-        //         },
-        //         time: 1,
-        //         events: true,
-        //       });
-        //       setTimeout(function () {
-        //         console.log("next");
-        //       }, 1000);
-        //       stage.update();
-        //     }
-        //   }
-
-
-        //   frame.on("complete", function () {
-        //     zog("hello hello");
-
-        // hero1 = new Hero(spriteImage, 8, 1, "Arngrim", 25, 30, "good", {
-        //     x: 0,
-        //     y: 0,
-        // })
-        //     .sca(1.5)
-        //     .center()
-        //     .animate({ loop: true })
-        //     .run({ time: 0.8, loop: true });
-        // window.hero1 = hero1;
-        // tokenArray.push(hero1);
-
-        // token = new Token(
-        //     40,
-        //     frame.red,
-        //     frame.dark,
-        //     "red ball",
-        //     15,
-        //     30,
-        //     "evil"
-        // ).center();
 
 
         function updateBoard() {
@@ -347,82 +271,11 @@ frame.on("ready", function () {
 
 
 
-        // tokenArray.push(hero1, token, token1);
-        // goodHero.moveToken({ target: { x: 40, y: 45, tileCol: 0, tileRow: 0 } });
-        // hero1.moveToken({ target: { x: 40, y: 45, tileCol: 0, tileRow: 0 } });
-        // token.moveToken({ target: { x: 380, y: 380, tileCol: 5, tileRow: 5 } });
-        // wireupEvents();
-        //   function attackEnemy() {}
-
-        //   function showEnemy() {
-        //     enemyList.innerHTML += `enemy:${token.name}`;
-        //   }
-        //   function showEnemies() {
-        //     let buttons = document.querySelector(".buttons1");
-        //     let enemyList = document.querySelector("#enemylist");
-        //     let enemyButton = document.querySelector(".enemy");
-
-        //     enemylist.innerHTML = ``;
-        //     enemy.addEventListener("click", showEnemy);
-        //   }
-
-        //   function updateBoard() {
-        //     let score = document.querySelector("#evil-scoreboard");
-        //     let score2 = document.querySelector("#good-scoreboard");
-        //     score.innerHTML = ``;
-        //     score2.innerHTML = ``;
-        //     for (let token of tokenArray) {
-        //       // if (token.health <= 0) {
-        //       //     tokenArray.remove(tokenArray.indexOf(token))
-        //       // }
-        //       if (token.team == "evil") {
-        //         score.innerHTML += `<li>name:${token.name} Health:${token.health}  Attack:${token.attack} </li>`;
-        //       } else {
-        //         score2.innerHTML += `<li>name:${token.name} Health:${token.health}  Attack:${token.attack} </li>`;
-        //       }
-        //     }
-        //   }
-
-        //   window.token = token;
-        //   tokenArray.push(token);
-        //   token.moveToken({ target: { x: 255, y: 255 } });
-        //   tokenArray.push(token);
-
-        //   wireupEvents();
-        //   token3 = new Token(
-        //     35,
-        //     frame.purple,
-        //     frame.dark,
-        //     "purple ball",
-        //     15,
-        //     30,
-        //     "evil"
-        //   ).center();
-        //   token4 = new Token(
-        //     30,
-        //     frame.green,
-        //     frame.dark,
-        //     "green ball",
-        //     15,
-        //     30,
-        //     "good"
-        //   ).center();
-        //   token2 = new Token(
-        //     25,
-        //     frame.blue,
-        //     frame.dark,
-        //     "blue ball",
-        //     15,
-        //     30,
-        //     "good"
-        //   ).center();
         var proportion = new Proportion(0, stageH, 1.2, 1.7);
-        // var proportion = new Proportion(0, stageH, 0.8, 1.3);
-        //   let tokenArray = [token]; //, token2, token3, token4];
-        // let tokenArray = []
+
         updateBoard();
 
-        // token.receiveDamage(hero1.dealDamage(10))
+
 
         function wireupEvents() {
             // lets add our events in this loop
@@ -526,30 +379,6 @@ frame.on("ready", function () {
             }
         }
 
-
-        // function wireupEvents() {
-        //     // lets add our events in this loop
-        //     for (let token of tokenArray) {
-        //         // create a click event on token to set it to become active
-        //         token.on("click", token.whoAmI)
-        //         token.on("animation", function () {
-        //             console.log('blah')
-        //             token.sca(proportion.convert(token.y));
-        //         })
-        //     }
-
-        //     tiles.on("click", function (e) {
-        //         console.log('check check')
-        //         for (let token of tokenArray) {
-        //             // if token has been confirmed to be active, it can be moved
-        //             if (token.active) {
-        //                 token.moveToken(e)
-        //             }
-        //             // resetting tokens activity to false after each movement
-        //             token.active = false
-        //         }
-        //     })
-        // }
 
 
 
