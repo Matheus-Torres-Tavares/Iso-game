@@ -1,15 +1,14 @@
-//Scaling Options
-//Scaling can have values as follows wirth full being default
-//"fit" sets canvas and stage to dimensions and scales to fit inside window
 var scaling = "fit";
 var width = 1280;
 var height = 960;
-var hero = ["img/arn1.png"]
+// var bgm = ["bgm/battle1.mp3"]
+// var heroes = ["img/background1.jpg", "img/background2.jpg", "img/background3.jpg", "img/background4.jpg", "img/arn1.png", "img/EvilHealer.png", "img/GoodHealer.png", "img/EvilHero.png", "img/EvilMage.png", "img/EvilRange.png", "img/GoodMage.png", "img/GoodRange.png", "img/background.PNG"]
 var frame = new Frame(scaling, width, height);
-let token = {}
-let token3 = {}
-let token4 = {}
-let token2 = {}
+let tokenArray = []
+
+
+
+
 
 frame.on("ready", function () {
     zog("ready from ZIM Frame");
@@ -17,47 +16,45 @@ frame.on("ready", function () {
     var stageW = frame.width;
     var stageH = frame.height;
     frame.outerColor = "#444";
-    frame.color = "#ddd";
-    var spriteImage = frame.asset("img/arn1.png")
-    var holder = new Container();
-    var tiles = new Tile(new Rectangle(70, 70, frame.light, frame.dark).centerReg(), 6, 6)
-        .rot(45)
-        .addTo(holder)
-        .outline()
-    holder.sca(2, 1).center();
-    window.tiles = tiles
-    tiles.on('click',function (e){
-        console.log(e)
-    })
-    tiles.on("mouseover", function (e) {
-        
-        e.target.color = frame.grey;
-        stage.update();
-    })
-    tiles.on("mouseout", function (e) {
-        e.target.color = frame.light;
-        stage.update();
-    })
+    frame.color = "black";
+    // frame.loadAssets("bgm/battle1.mp3", "img/background1.jpg", "img/background2.jpg", "img/background3.jpg", "img/background4.jpg", "img/arn1.png", "img/EvilHealer.png", "img/GoodHealer.png", "img/EvilHero.png", "img/EvilMage.png", "img/EvilRange.png", "img/GoodMage.png", "img/GoodRange.png", "img/background.PNG")
+
+
+    var background = asset("img/background1.jpg")
+    var gHeroImg = asset("img/arn1.png")
+    var gMageImg = asset("img/GoodMage.png")
+    var gRangerImg = asset("img/GoodRange.png")
+    var gHealerImg = asset("img/GoodHealer.png")
+    var eHeroImg = asset("img/EvilHero.png")
+    var eMageImg = asset("img/EvilMage.png")
+    var eRangerImg = asset("img/EvilRange.png")
+    var eHealerImg = asset("img/EvilHealer.png")
+    // bgmusic.play();
+
+
+
 
     class Hero extends Sprite {
-        constructor(image, cols, rows, name, attack, health, team) {
+        constructor(image, cols, rows, name, attack, health, team, xSpr, ySpr) {
             super(image, cols, rows)
             this.name = name
             this.attack = attack
             this.health = health
             this.team = team
+            this.xSpr = xSpr
+            this.ySpr = ySpr
             this.active = false
             this.hero = true
             this.image = image
-            this.position={x:0,y:0}
+            this.position = { x: 0, y: 0 }
         }
         whoAmI() {
-            console.log(this.name,this.position)
+            console.log(this.name, this.position)
             for (let token of tokenArray) {
                 token.active = false
             }
             this.active = true//!this.active
-            document.querySelector('#whoami').innerHTML=this.name
+            document.querySelector('#whoami').innerHTML = `Selected: ${this.name}`
         }
         dealDamage() {
             return this.attack
@@ -73,11 +70,11 @@ frame.on("ready", function () {
             console.log(this.image.width, this.image.height)
             var point = tiles.localToGlobal(e.target.x, e.target.y)
             console.log(point)
-            this.position={x:point.x,y:point.y}
+            this.position = { x: point.x, y: point.y }
             this.animate({
                 obj: {
-                    x: point.x - 60,
-                    y: point.y - 80
+                    x: point.x - this.xSpr,
+                    y: point.y - this.ySpr
                 },
                 time: 1,
                 events: true
@@ -90,64 +87,77 @@ frame.on("ready", function () {
     }
 
 
-    class Token extends Circle {
-        constructor(size, color, border, name, attack, health, team) {
-            super(size, color, border)
-            this.name = name
-            this.attack = attack
-            this.health = health
-            this.team = team
-            this.active = false
-            this.position= {x:0,y:0}
-        }
-        whoAmI() {
-            console.log(this.team)
-            for (let token of tokenArray) {
-                token.active = false
-            }
-            this.active = true//!this.active
-            document.querySelector('#whoami').innerHTML=this.name
-        }
-        dealDamage() {
-            return this.attack
-        }
-        receiveDamage(dmg) {
-            this.health -= dmg;
-            if (this.health > 0) {
-                console.log(`${this.name} received ${dmg} points of damage!`)
-            } else { console.log(`${this.name} has died! RIP.`) }
-            updateBoard()
-        }
-        moveToken(e) {
-            var point = tiles.localToGlobal(e.target.x, e.target.y)
-            console.log(point)
-            this.position={x:point.x,y:point.y}
-            this.animate({
-                obj: {
-                    x: point.x,
-                    y: point.y
-                },
-                time: 1,
-                events: true
-            });
-            setTimeout(function () {
-                console.log('next')
-            }, 1000)
-            stage.update();
-        }
-    }
+
+
+
+    let heroAssets = 0
 
     frame.on("complete", function () {
-        zog("hello hello")
+        heroAssets++;
+
+        console.log('Fake complete')
+        var holder = new Container();
+        var tiles = new Tile(new Rectangle(50, 50, frame.faint, frame.light).centerReg(), 8, 8)
+            .rot(45)
+            .addTo(holder)
+            .outline()
+        holder.sca(2, 1).center();
+        window.tiles = tiles
+        tiles.on('click', function (e) {
+            console.log(e)
+        })
+        tiles.on("mouseover", function (e) {
+
+            e.target.color = frame.red;
+            stage.update();
+        })
+        tiles.on("mouseout", function (e) {
+            e.target.color = frame.faint;
+            stage.update();
+        })
 
 
-        var hero1 = new Hero(spriteImage, 8, 1, "Arngrim", 25, 30, "good").sca(1.5).center().animate({ loop: true }).run({ time: 0.8, loop: true });
-        window.hero1 = hero1
-        tokenArray.push(hero1)
+        var goodHero = new Hero(gHeroImg, 8, 1, "Arngrim, Champion of the Gauntlet", 25, 30, "good", 105, 110).center().animate({ loop: true }).sca(1.5).run({ time: 0.8, loop: true });
+        window.goodHero = goodHero
+        var goodMage = new Hero(gMageImg, 4, 1, "Laurel, Sorceress Supreme", 25, 30, "good", 65, 90).center().animate({ loop: true }).sca(1.5).run({ time: 0.6, loop: true });
+        window.goodMage = goodMage
+        var goodRanger = new Hero(gRangerImg, 4, 1, "Freiya, Arcane Archer", 25, 30, "good", 70, 110).center().animate({ loop: true }).sca(1.5).run({ time: 0.6, loop: true });
+        window.goodRanger = goodRanger
+        var goodHealer = new Hero(gHealerImg, 4, 1, "Priestess of the Light", 25, 30, "good", 65, 95).center().animate({ loop: true }).sca(1.5).run({ time: 0.6, loop: true });
+        window.goodHealer = goodHealer
+        var evilHero = new Hero(eHeroImg, 4, 1, "Paragon of Darkness", 25, 30, "evil", 108, 105).center().animate({ loop: true }).sca(1.5).run({ time: 0.8, loop: true });
+        window.evilHero = evilHero
+        var evilMage = new Hero(eMageImg, 4, 1, "Zazavozz the Umbral Magus", 25, 30, "evil", 55, 110).center().animate({ loop: true }).sca(1.5).run({ time: 0.8, loop: true });
+        window.evilMage = evilMage
+        var evilRanger = new Hero(eRangerImg, 4, 1, "Akama, Ocelot Sniper", 25, 30, "evil", 50, 125).center().animate({ loop: true }).sca(1.5).run({ time: 0.8, loop: true });
+        window.evilRanger = evilRanger
+        var evilHealer = new Hero(eHealerImg, 4, 1, "Hera, Defiler of Streams", 25, 30, "evil", 87, 105).center().animate({ loop: true }).sca(1.5).run({ time: 0.8, loop: true });
+        window.evilHealer = evilHealer
+        console.log('hwl')
+        console.log(frame.assets, typeof frame.assets, Object.keys(frame.assets).length)
+        if (heroAssets < 9) {
+            // return
+        } else {
+            console.log("I've reached my final form")
+            tokenArray.push(goodHero, goodMage, goodRanger, goodHealer, evilHero, evilMage, evilRanger, evilHealer)
+        }
+        // }
+        background.center()
+
+
+        // asset("img/background1.jpg").center();
+
+
+
+
+
         wireupEvents()
+        updateBoard()
+
 
 
     })
+
 
 
     function updateBoard() {
@@ -171,16 +181,12 @@ frame.on("ready", function () {
 
 
 
-    token = new Token(40, frame.red, frame.dark, "red ball", 15, 30, "evil").center();
-    token3 = new Token(35, frame.purple, frame.dark, "purple ball", 15, 30, "evil").center();
-    token4 = new Token(30, frame.green, frame.dark, "green ball", 15, 30, "good").center();
-    token2 = new Token(25, frame.blue, frame.dark, "blue ball", 15, 30, "good").center();
-    var proportion = new Proportion(0, stageH, .8, 1.3);
-    let tokenArray = [token, token2, token3, token4]
-    // let tokenArray = []
+    var proportion = new Proportion(0, stageH, 1.2, 1.7);
+
+
     updateBoard()
 
-    // token.receiveDamage(token3.dealDamage())
+
 
     function wireupEvents() {
         // lets add our events in this loop
@@ -192,7 +198,7 @@ frame.on("ready", function () {
                 token.sca(proportion.convert(token.y));
             })
         }
-        window.token = token
+
         tiles.on("click", function (e) {
             console.log('check check')
             for (let token of tokenArray) {
@@ -212,7 +218,7 @@ frame.on("ready", function () {
     function collisionDetection() {
         for (let token of tokenArray) {
             for (let tile of tiles.children) {
-                console.log(token, tile, token.name, token._bounds,tile._bounds)
+                console.log(token, tile, token.name, token._bounds, tile._bounds)
                 tile.color = frame.red
                 break
             }
@@ -223,5 +229,6 @@ frame.on("ready", function () {
     //     token2.sca(proportion.convert(token2.y));
     // });
     stage.update();
+
 });
 

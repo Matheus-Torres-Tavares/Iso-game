@@ -5,15 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Isometric grid test</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div id ='whoami'>whoami</div>
-    <h3>Evil Side</h3>
-    <ul id="evil-scoreboard"></ul>
-    <h3>Good Side</h3>
-    <ul id="good-scoreboard"></ul>
-    
+    <div id='whoami'>Selected Champion:</div>
+    <div class='board'>
+        <div class='goodSide'>
+            <h3 class='header'>Good Side</h3>
+            <ul id="good-scoreboard"></ul>
+
+        </div>
+        <div class='evilSide'>
+            <h3 class='header'>Evil Side</h3>
+            <ul id="evil-scoreboard"></ul>
+
+        </div>
+    </div>
+
+
     <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
     <script>
         var zon = true;
