@@ -1,4 +1,4 @@
-* {
+/* * {
 
     color: #eff1ff;
     text-shadow: 2px 2px #212421,
@@ -37,13 +37,7 @@
     border-radius: 7px;
 }
 
-/* .board {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
 
-
-} */
 
 .goodSide {
     position: absolute;
@@ -142,4 +136,4 @@
     }
 
 
-}
+} */
