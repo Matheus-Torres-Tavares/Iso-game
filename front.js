@@ -31,16 +31,16 @@ frame.on("ready", function () {
     // frame.loadAssets("bgm/battle1.mp3", "img/background1.jpg", "img/background2.jpg", "img/background3.jpg", "img/background4.jpg", "img/arn1.png", "img/EvilHealer.png", "img/GoodHealer.png", "img/EvilHero.png", "img/EvilMage.png", "img/EvilRange.png", "img/GoodMage.png", "img/GoodRange.png", "img/background.PNG")
 
 
-    // var background = asset("img/background1.jpg")
+    var background = asset("img/background1.jpg")
     var gHeroImg = asset("img/arn1.png")
-    // var gMageImg = asset("img/GoodMage.png")
-    // var gRangerImg = asset("img/GoodRange.png")
-    // var gHealerImg = asset("img/GoodHealer.png")
-    // var eHeroImg = asset("img/EvilHero.png")
-    // var eMageImg = asset("img/EvilMage.png")
-    // var eRangerImg = asset("img/EvilRange.png")
-    // var eHealerImg = asset("img/EvilHealer.png")
-    // var hero = ["img/arn1.png"];
+    var gMageImg = asset("img/GoodMage.png")
+    var gRangerImg = asset("img/GoodRange.png")
+    var gHealerImg = asset("img/GoodHealer.png")
+    var eHeroImg = asset("img/EvilHero.png")
+    var eMageImg = asset("img/EvilMage.png")
+    var eRangerImg = asset("img/EvilRange.png")
+    var eHealerImg = asset("img/EvilHealer.png")
+    var hero = ["img/arn1.png"];
     // // bgmusic.play();
 
 
@@ -201,14 +201,16 @@ frame.on("ready", function () {
 
         var goodHero = new Hero(gHeroImg, 8, 1, "Arngrim, Champion of the Gauntlet", 25, 30, "good", 105, 110).center().animate({ loop: true }).sca(1.5).run({ time: 0.8, loop: true });
         window.goodHero = goodHero
+        goodHero.moveToken({ target: { x: 40, y: 45, tileCol: 0, tileRow: 0 } });
         // var goodMage = new Hero(gMageImg, 4, 1, "Laurel, Sorceress Supreme", 25, 30, "good", 65, 90).center().animate({ loop: true }).sca(1.5).run({ time: 0.6, loop: true });
         // window.goodMage = goodMage
         // var goodRanger = new Hero(gRangerImg, 4, 1, "Freiya, Arcane Archer", 25, 30, "good", 70, 110).center().animate({ loop: true }).sca(1.5).run({ time: 0.6, loop: true });
         // window.goodRanger = goodRanger
         // var goodHealer = new Hero(gHealerImg, 4, 1, "Priestess of the Light", 25, 30, "good", 65, 95).center().animate({ loop: true }).sca(1.5).run({ time: 0.6, loop: true });
         // window.goodHealer = goodHealer
-        // var evilHero = new Hero(eHeroImg, 4, 1, "Paragon of Darkness", 25, 30, "evil", 108, 105).center().animate({ loop: true }).sca(1.5).run({ time: 0.8, loop: true });
-        // window.evilHero = evilHero
+        var evilHero = new Hero(eHeroImg, 4, 1, "Paragon of Darkness", 25, 30, "evil", 108, 105).center().animate({ loop: true }).sca(1.5).run({ time: 0.8, loop: true });
+        window.evilHero = evilHero
+        evilHero.moveToken({ target: { x: 50, y: 95, tileCol: 1, tileRow: 1 } });
         // var evilMage = new Hero(eMageImg, 4, 1, "Zazavozz the Umbral Magus", 25, 30, "evil", 55, 110).center().animate({ loop: true }).sca(1.5).run({ time: 0.8, loop: true });
         // window.evilMage = evilMage
         // var evilRanger = new Hero(eRangerImg, 4, 1, "Akama, Ocelot Sniper", 25, 30, "evil", 50, 125).center().animate({ loop: true }).sca(1.5).run({ time: 0.8, loop: true });
@@ -218,11 +220,11 @@ frame.on("ready", function () {
         var token = new Token(40, frame.red, frame.dark, "red ball", 15, 30, "evil").center();
         // console.log('hwl')
         // console.log(frame.assets, typeof frame.assets, Object.keys(frame.assets).length)
-        if (heroAssets < 1) {
+        if (heroAssets < 9) {
             // return
         } else {
             console.log("I've reached my final form")
-            tokenArray.push(goodHero, token)
+            tokenArray.push(goodHero, evilHero)
             // tokenArray.push(goodHero, goodMage, goodRanger, goodHealer, evilHero, evilMage, evilRanger, evilHealer)
         }
         // }
@@ -345,7 +347,7 @@ frame.on("ready", function () {
         ).center();
 
         // tokenArray.push(hero1, token, token1);
-        goodHero.moveToken({ target: { x: 40, y: 45, tileCol: 0, tileRow: 0 } });
+        // goodHero.moveToken({ target: { x: 40, y: 45, tileCol: 0, tileRow: 0 } });
         // hero1.moveToken({ target: { x: 40, y: 45, tileCol: 0, tileRow: 0 } });
         // token.moveToken({ target: { x: 380, y: 380, tileCol: 5, tileRow: 5 } });
         token1.moveToken({ target: { x: 380, y: 380, tileCol: 5, tileRow: 5 } });
@@ -514,7 +516,7 @@ frame.on("ready", function () {
                 } else {
                     tile.canMovehere = false;
                     tile.canAttackHere = false;
-                    tile.color = frame.light;
+                    tile.color = frame.clear;
                 }
 
 
