@@ -119,66 +119,6 @@ frame.on("ready", function () {
         }
     }
 
-    class Token extends Circle {
-        constructor(size, color, border, name, attack, health, team) {
-            super(size, color, border);
-            this.name = name;
-            this.attack = attack;
-            this.health = health;
-            this.team = team;
-            this.active = false;
-            this.inRange = false;
-            this.position = { x: 5, y: 5 };
-        }
-        whoAmI() {
-            console.log(this.team);
-            for (let token of tokenArray) {
-                token.active = false;
-            }
-            this.active = true; //!this.active
-            seeMoveOptions2(this);
-            seeAttackOptions(this);
-            document.querySelector("#whoami").innerHTML = this.name;
-        }
-        dealDamage() {
-            if (this.inRange) {
-                return this.attack;
-            } else {
-                alert("The Enemy is too far");
-            }
-        }
-        receiveDamage(dmg) {
-            if (!this.inRange) {
-                alert("You're out of range");
-                return;
-            }
-            this.health -= dmg;
-            if (this.health > 0) {
-                console.log(`${this.name} received ${dmg} points of damage!`);
-            } else {
-                console.log(`${this.name} has died! RIP.`);
-            }
-            updateBoard();
-        }
-        moveToken(e) {
-            var point = tiles.localToGlobal(e.target.x, e.target.y);
-            console.log(point);
-            this.position = { x: e.target.tileCol, y: e.target.tileRow };
-            console.log(this.position);
-            this.animate({
-                obj: {
-                    x: point.x,
-                    y: point.y,
-                },
-                time: 1,
-                events: true,
-            });
-            setTimeout(function () {
-                console.log("next");
-            }, 1000);
-            stage.update();
-        }
-    }
 
     let heroAssets = 0
 
