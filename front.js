@@ -54,6 +54,7 @@ frame.on("ready", function () {
             this.hero = true
             this.image = image
             this.position = { x: 0, y: 0 }
+            this.turn = false
         }
         whoAmI() {
             console.log(this.name, this.cool, this);
@@ -232,7 +233,7 @@ frame.on("ready", function () {
             // return
         } else {
             console.log("I've reached my final form")
-            tokenArray.push(goodHero, goodMage, goodMage, evilHero)
+            tokenArray.push(goodHero, goodMage, goodMage, goodHealer, evilHero)
             // tokenArray.push(goodHero, goodMage, goodRanger, goodHealer, evilHero, evilMage, evilRanger, evilHealer)
         }
         // }
