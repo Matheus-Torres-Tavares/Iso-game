@@ -5,11 +5,11 @@ var height = 960;
 
 var frame = new Frame(scaling, width, height);
 let tokenArray = [];
-let hero1 = {};
+
 let token = {};
-let token3 = {};
-let token4 = {};
-let token2 = {};
+
+
+
 
 
 
@@ -141,7 +141,7 @@ frame.on("ready", function () {
                 token.active = false;
             }
             this.active = true; //!this.active
-            seeMoveOptions2(this);
+            seeMoveOptions(this);
             seeAttackOptions(this);
             document.querySelector("#whoami").innerHTML = this.name;
         }
@@ -219,15 +219,15 @@ frame.on("ready", function () {
                 .center()
                 .animate({ loop: true })
                 .sca(1.5)
-                .run({ time: 0.8, loop: true });
+                .run({ time: 0.7, loop: true });
             window.goodHero = goodHero;
-            goodHero.moveToken({ target: { x: 290, y: 345, tileCol: 0, tileRow: 0 } });
+            goodHero.moveToken({ target: { x: 290, y: 345, tileCol: 5, tileRow: 6 } });
 
             var goodMage = new Mage(gMageImg, 4, 1, "Laurel, Sorceress Supreme", 25, 30, "good", 65, 90)
                 .center()
                 .animate({ loop: true })
                 .sca(1.5)
-                .run({ time: 0.6, loop: true });
+                .run({ time: 0.4, loop: true });
             window.goodMage = goodMage;
             goodMage.moveToken({ target: { x: 70, y: 320, tileCol: 1, tileRow: 6 } });
 
@@ -235,7 +235,7 @@ frame.on("ready", function () {
                 .center()
                 .animate({ loop: true })
                 .sca(1.5)
-                .run({ time: 0.6, loop: true });
+                .run({ time: 0.4, loop: true });
             window.goodRanger = goodRanger
             goodRanger.moveToken({ target: { x: 120, y: 320, tileCol: 2, tileRow: 6 } });
 
@@ -243,7 +243,7 @@ frame.on("ready", function () {
                 .center()
                 .animate({ loop: true })
                 .sca(1.5)
-                .run({ time: 0.6, loop: true });
+                .run({ time: 0.4, loop: true });
             window.goodHealer = goodHealer;
             goodHealer.moveToken({ target: { x: 170, y: 320, tileCol: 3, tileRow: 6 }, });
 
@@ -251,30 +251,30 @@ frame.on("ready", function () {
                 .center()
                 .animate({ loop: true })
                 .sca(1.5)
-                .run({ time: 0.8, loop: true });
+                .run({ time: 0.4, loop: true });
             window.evilHero = evilHero;
             evilHero.moveToken({ target: { x: 90, y: 95, tileCol: 1, tileRow: 1 } });
 
-            var evilMage = new Hero(eMageImg, 4, 1, "Zazavozz the Umbral Magus", 25, 30, "evil", 55, 110)
+            var evilMage = new Mage(eMageImg, 4, 1, "Zazavozz the Umbral Magus", 25, 30, "evil", 55, 110)
                 .center()
                 .animate({ loop: true })
                 .sca(1.5)
-                .run({ time: 0.8, loop: true });
+                .run({ time: 0.4, loop: true });
             window.evilMage = evilMage
-            evilMage.moveToken({ target: { x: 140, y: 95, tileCol: 1, tileRow: 1 } });
+            evilMage.moveToken({ target: { x: 140, y: 95, tileCol: 2, tileRow: 1 } });
 
-            var evilRanger = new Hero(eRangerImg, 4, 1, "Akama, Ocelot Sniper", 25, 30, "evil", 50, 125)
+            var evilRanger = new Ranger(eRangerImg, 4, 1, "Akama, Ocelot Sniper", 25, 30, "evil", 50, 125)
                 .center()
                 .animate({ loop: true })
                 .sca(1.5)
-                .run({ time: 0.8, loop: true });
+                .run({ time: 0.4, loop: true });
             window.evilRanger = evilRanger
             evilRanger.moveToken({ target: { x: 190, y: 95, tileCol: 3, tileRow: 1 } });
-            var evilHealer = new Hero(eHealerImg, 4, 1, "Hera, Defiler of Streams", 25, 30, "evil", 87, 105)
+            var evilHealer = new Healer(eHealerImg, 4, 1, "Hera, Defiler of Streams", 25, 30, "evil", 87, 105)
                 .center()
                 .animate({ loop: true })
                 .sca(1.5)
-                .run({ time: 0.8, loop: true });
+                .run({ time: 0.4, loop: true });
             window.evilHealer = evilHealer
             evilHealer.moveToken({ target: { x: 240, y: 95, tileCol: 4, tileRow: 1 } });
             console.log(frame.assets, typeof frame.assets, Object.keys(frame.assets).length)
