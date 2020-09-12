@@ -279,7 +279,7 @@ frame.on("ready", function () {
             evilHealer.moveToken({ target: { x: 240, y: 95, tileCol: 4, tileRow: 1 } });
             console.log(frame.assets, typeof frame.assets, Object.keys(frame.assets).length)
             console.log("I've reached my final form");
-            tokenArray.push(evilHero, evilMage, evilRanger, goodHero, goodHealer, goodMage, goodRanger);
+            tokenArray.push(evilHero, evilMage, evilRanger, evilHealer, goodHero, goodHealer, goodMage, goodRanger);
             tokenArray = shuffle(tokenArray);
             tokenArray[0].turn = true;
             console.log(tokenArray);
@@ -533,12 +533,17 @@ document.querySelector("#endturn").onclick = function () {
     //console.log(tokenArray[playersTurn + 1].name, " -=-=-=-=");
     //let n = tokenArray[playersTurn + 1] ? playersTurn + 1 : 0;
     playersTurn++;
+    document.querySelector("#turnPush").innerHTML =
+        `Total players: ${tokenArray.length} 
+    <br>
+    
+    Current Player's Turn: ${tokenArray[playersTurn % tokenArray.length].name}`
 
-    console.log(
-        "Next player's turn is ",
-        tokenArray[playersTurn % tokenArray.length].name,
-        " TOtal players ",
-        tokenArray.length
-    );
+    // console.log(
+    //     "Next player's turn is ",
+    //     tokenArray[playersTurn % tokenArray.length].name,
+    //     " TOtal players ",
+    //     tokenArray.length
+    // );
     tokenArray[playersTurn % tokenArray.length].turn = true;
 };

@@ -1,36 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Isometric grid test</title>
     <link rel="stylesheet" href="style.css" />
-</head>
+  </head>
 
-<body>
-
-    <div id="whoami">Selected Champion:
-        <button id="endturn">End Turn</button>
-    </div>
+  <body>
+    <div id="whoami">Selected Champion:</div>
     <div class="board">
-        <div class="goodSide">
-            <h3 class="header">Good Side</h3>
-            <ul id="good-scoreboard"></ul>
-        </div>
-        <div class="evilSide">
-            <h3 class="header">Evil Side</h3>
-            <ul id="evil-scoreboard"></ul>
-        </div>
+      <div class="goodSide">
+        <h3 class="header">Good Side</h3>
+        <ul id="good-scoreboard"></ul>
+      </div>
+      <div class="evilSide">
+        <h3 class="header">Evil Side</h3>
+        <ul id="evil-scoreboard"></ul>
+      </div>
+      <div class="turnCounter">
+        <h3>Turn Order</h3>
+        <div id="turnPush"></div>
+        <button id="endturn">End Turn</button>
+      </div>
     </div>
 
     <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
     <script>
-        var zon = true;
-        var zns = false;
+      var zon = true;
+      var zns = false;
     </script>
     <script src="https://zimjs.org/cdn/cat/01/zim.js"></script>
     <script src="front.js"></script>
-</body>
-
+  </body>
 </html>
