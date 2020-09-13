@@ -221,7 +221,7 @@ frame.on("ready", function () {
                 .sca(1.5)
                 .run({ time: 0.7, loop: true });
             window.goodHero = goodHero;
-            goodHero.moveToken({ target: { x: 290, y: 345, tileCol: 5, tileRow: 6 } });
+            goodHero.moveToken({ target: { x: 270, y: 325, tileCol: 5, tileRow: 6 } });
 
             var goodMage = new Mage(gMageImg, 4, 1, "Laurel, Sorceress Supreme", 25, 30, "good", 65, 90)
                 .center()
@@ -253,7 +253,7 @@ frame.on("ready", function () {
                 .sca(1.5)
                 .run({ time: 0.4, loop: true });
             window.evilHero = evilHero;
-            evilHero.moveToken({ target: { x: 90, y: 95, tileCol: 1, tileRow: 1 } });
+            evilHero.moveToken({ target: { x: 90, y: 80, tileCol: 1, tileRow: 1 } });
 
             var evilMage = new Mage(eMageImg, 4, 1, "Zazavozz the Umbral Magus", 25, 30, "evil", 55, 110)
                 .center()
@@ -261,7 +261,7 @@ frame.on("ready", function () {
                 .sca(1.5)
                 .run({ time: 0.4, loop: true });
             window.evilMage = evilMage
-            evilMage.moveToken({ target: { x: 140, y: 95, tileCol: 2, tileRow: 1 } });
+            evilMage.moveToken({ target: { x: 280, y: 85, tileCol: 5, tileRow: 1 } });
 
             var evilRanger = new Ranger(eRangerImg, 4, 1, "Akama, Ocelot Sniper", 25, 30, "evil", 50, 125)
                 .center()
@@ -269,7 +269,7 @@ frame.on("ready", function () {
                 .sca(1.5)
                 .run({ time: 0.4, loop: true });
             window.evilRanger = evilRanger
-            evilRanger.moveToken({ target: { x: 190, y: 95, tileCol: 3, tileRow: 1 } });
+            evilRanger.moveToken({ target: { x: 180, y: 85, tileCol: 3, tileRow: 1 } });
             var evilHealer = new Healer(eHealerImg, 4, 1, "Hera, Defiler of Streams", 25, 30, "evil", 87, 105)
                 .center()
                 .animate({ loop: true })
@@ -381,6 +381,7 @@ frame.on("ready", function () {
                     tile.canAttackHere = true;
 
                     tile.color = frame.blue;
+                    updateBoard()
                 } else {
                     tile.canMovehere = false;
                     tile.canAttackHere = false;
