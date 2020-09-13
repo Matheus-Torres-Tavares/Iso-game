@@ -3,6 +3,12 @@
     src: url('diablo_h.ttf');
 }
 
+body {
+    font-family: 'diablo';
+    text-shadow: 5px 5px black;
+
+}
+
 .frontPage {
     display: flex;
     flex-direction: column;
@@ -15,7 +21,13 @@
 }
 
 #title {
-    font-family: 'diablo';
+    margin: 150px;
     font-size: 80px;
+    color: white;
+}
+
+#subtitle {
+    margin-top: -150px;
+    font-size: 40px;
     color: white;
 }

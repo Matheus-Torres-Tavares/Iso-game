@@ -152,7 +152,7 @@ frame.on("ready", function () {
         token.active = false;
       }
       this.active = true; //!this.active
-      seeMoveOptionsh(this);
+      seeMoveOptions(this);
       seeAttackOptions(this);
       document.querySelector("#whoami").innerHTML = this.name;
     }
@@ -197,7 +197,7 @@ frame.on("ready", function () {
       console.log(e);
     });
     tiles.on("mouseover", function (e) {
-      e.target.color = frame.red;
+      e.target.color = frame.green;
       stage.update();
     });
     tiles.on("mouseout", function (e) {
@@ -376,6 +376,7 @@ frame.on("ready", function () {
         goodMage,
         goodRanger
       );
+
       tokenArray = shuffle(tokenArray);
       tokenArray[0].turn = true;
       console.log(tokenArray);
@@ -477,6 +478,7 @@ frame.on("ready", function () {
           tile.canAttackHere = true;
 
           tile.color = frame.blue;
+
           updateBoard();
         } else {
           tile.canMovehere = false;
@@ -510,7 +512,16 @@ frame.on("ready", function () {
           (tile.tileCol == token.position.x &&
             tile.tileRow + 1 == token.position.y) ||
           (tile.tileCol == token.position.x &&
-            tile.tileRow + 2 == token.position.y)
+            tile.tileRow + 2 == token.position.y) ||
+          (tile.tileCol + 1 == token.position.x &&
+            tile.tileRow + 1 == token.position.y) ||
+          (tile.tileCol - 1 == token.position.x &&
+            tile.tileRow + 1 == token.position.y)
+          ||
+          (tile.tileCol + 1 == token.position.x &&
+            tile.tileRow - 1 == token.position.y) ||
+          (tile.tileCol - 1 == token.position.x &&
+            tile.tileRow - 1 == token.position.y)
         ) {
           console.log("now");
           //Check if there's a bad guy in there
@@ -567,6 +578,30 @@ frame.on("ready", function () {
             tile.tileRow - 3 == token.position.y) ||
           (tile.tileCol == token.position.x &&
             tile.tileRow + 1 == token.position.y) ||
+          (tile.tileCol + 1 == token.position.x &&
+            tile.tileRow + 2 == token.position.y) ||
+          (tile.tileCol + 2 == token.position.x &&
+            tile.tileRow + 1 == token.position.y) ||
+          (tile.tileCol - 1 == token.position.x &&
+            tile.tileRow - 1 == token.position.y) ||
+          (tile.tileCol - 2 == token.position.x &&
+            tile.tileRow - 1 == token.position.y) ||
+          (tile.tileCol - 1 == token.position.x &&
+            tile.tileRow - 2 == token.position.y) ||
+          (tile.tileCol + 1 == token.position.x &&
+            tile.tileRow - 1 == token.position.y) ||
+          (tile.tileCol + 2 == token.position.x &&
+            tile.tileRow - 1 == token.position.y) ||
+          (tile.tileCol + 1 == token.position.x &&
+            tile.tileRow - 2 == token.position.y) ||
+          (tile.tileCol - 1 == token.position.x &&
+            tile.tileRow + 1 == token.position.y) ||
+          (tile.tileCol - 1 == token.position.x &&
+            tile.tileRow + 2 == token.position.y) ||
+          (tile.tileCol - 2 == token.position.x &&
+            tile.tileRow + 1 == token.position.y) ||
+          (tile.tileCol + 1 == token.position.x &&
+            tile.tileRow + 1 == token.position.y) ||
           (tile.tileCol == token.position.x &&
             tile.tileRow + 2 == token.position.y) ||
           (tile.tileCol == token.position.x &&
@@ -581,7 +616,7 @@ frame.on("ready", function () {
         } else {
           tile.canMovehere = false;
           tile.canAttackHere = false;
-          tile.color = frame.clear;
+          tile.color = frame.faint;
         }
 
         // break
@@ -631,6 +666,13 @@ frame.on("ready", function () {
                 tile.tileRow === tok.position.y
             );
             tile.color = frame.red;
+            tile.canAttackHere = true
+            if (tile.canAttackHere = true) {
+              console.log('one two three')
+            }
+            tok.on("click", function () {
+              console.log('test')
+            })
           } else {
             tok.color = frame.red;
             tok.inRange = false;
@@ -668,9 +710,8 @@ document.querySelector("#endturn").onclick = function () {
   //console.log(tokenArray[playersTurn + 1].name, " -=-=-=-=");
   //let n = tokenArray[playersTurn + 1] ? playersTurn + 1 : 0;
   playersTurn++;
-  document.querySelector("#turnPush").innerHTML = `Total players: ${
-    tokenArray.length
-  } 
+  document.querySelector("#turnPush").innerHTML = `Total players: ${tokenArray.length
+    } 
     <br>
     
     Current Player's Turn: ${tokenArray[playersTurn % tokenArray.length].name}`;
@@ -682,4 +723,5 @@ document.querySelector("#endturn").onclick = function () {
   //     tokenArray.length
   // );
   tokenArray[playersTurn % tokenArray.length].turn = true;
+
 };
