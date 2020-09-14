@@ -11,6 +11,7 @@ let token = {};
 frame.on("ready", function () {
   zog("ready from ZIM Frame");
   var stage = frame.stage;
+  window.stage = stage;
   var stageW = frame.width;
   var stageH = frame.height;
   frame.outerColor = "#444";
@@ -46,18 +47,30 @@ frame.on("ready", function () {
       this.firstMove = true;
     }
     whoAmI() {
-      console.log(this.name, this.cool, this);
+      console.log(this.name, this.turn, this.active, this.inRange, this);
 
+      let attacker = null
       for (let token of tokenArray) {
+        if (token.turn && token.name != this.name) {
+          attacker = token
+        }
         token.active = false;
       }
       this.active = true; //!this.active
       document.querySelector("#whoami").innerHTML = this.name;
+
+      if (attacker) {
+        let smash = this.receiveDamage(attacker.dealDamage())
+        console.log(smash)
+        return "smash"
+      }
+
       return this.turn;
     }
     dealDamage() {
       if (this.hasAttacked) {
-        return alert("You've already attacked!");
+        alert("You've already attacked!");
+        return 0;
       } else {
         this.hasAttacked = true;
       }
@@ -65,6 +78,7 @@ frame.on("ready", function () {
       return this.attack;
     }
     receiveDamage(dmg) {
+      console.log(dmg)
       if (!this.inRange) {
         alert("You're out of range");
         return;
@@ -74,12 +88,19 @@ frame.on("ready", function () {
         console.log(`${this.name} received ${dmg} points of damage!`);
       } else {
         console.log(`${this.name} has died! RIP.`);
+        this.removeFrom(stage)
+        tokenArray.forEach((token, index) => {
+          if (token.name == this.name) {
+            tokenArray.splice(index, 1)
+          };
+
+        })
       }
       updateBoard();
     }
     moveToken(e) {
       if (this.hasMoved) {
-        console.log(this);
+        //console.log(this);
         return alert("You've Already moved");
       } else {
         if (!this.firstMove) {
@@ -88,9 +109,9 @@ frame.on("ready", function () {
           this.firstMove = false;
         }
       }
-      console.log(this.image.width, this.image.height, e.target);
+      //console.log(this.image.width, this.image.height, e.target);
       var point = tiles.localToGlobal(e.target.x, e.target.y);
-      console.log(point);
+      //console.log(point);
       this.position = { x: e.target.tileCol, y: e.target.tileRow };
       this.animate({
         obj: {
@@ -101,7 +122,7 @@ frame.on("ready", function () {
         events: true,
       });
       setTimeout(function () {
-        console.log("next");
+        //console.log("next");
       }, 1000);
       stage.update();
     }
@@ -109,8 +130,13 @@ frame.on("ready", function () {
 
   class Ranger extends Hero {
     whoAmI() {
-      console.log(this.name, this.cool, this);
+      //console.log(this.name, this.cool, this);
       let turn = super.whoAmI();
+      if (turn == "smash") {
+        console.log('test smash')
+        return;
+      }
+      console.log(turn)
       if (!turn) {
         return alert("Not your turn!");
       }
@@ -126,8 +152,13 @@ frame.on("ready", function () {
 
   class Mage extends Hero {
     whoAmI() {
-      console.log(this.name, this.cool, this);
+      //console.log(this.name, this.cool, this);
       let turn = super.whoAmI();
+      console.log(turn)
+      if (turn == "smash") {
+        console.log('test smash')
+        return;
+      }
       if (!turn) {
         return alert("Not your turn!");
       }
@@ -143,8 +174,12 @@ frame.on("ready", function () {
 
   class Healer extends Hero {
     whoAmI() {
-      console.log(this.name, this.cool, this);
+      //console.log(this.name, this.cool, this);
       let turn = super.whoAmI();
+      if (turn == "smash") {
+        console.log('test smash')
+        return;
+      }
       if (!turn) {
         return alert("Not your turn!");
       }
@@ -161,10 +196,15 @@ frame.on("ready", function () {
   class Fighter extends Hero {
     whoAmI() {
       let turn = super.whoAmI();
+      console.log(turn)
+      if (turn == "smash") {
+        console.log('test smash')
+        return;
+      }
       if (!turn) {
         return alert("Not your turn!");
       }
-      console.log(this.name, this.cool, this);
+      //console.log(this.name, this.cool, this);
 
       // for (let token of tokenArray) {
       // token.active = false;
@@ -181,7 +221,7 @@ frame.on("ready", function () {
   frame.on("complete", function () {
     heroAssets++;
 
-    console.log("Fake complete");
+    //console.log("Fake complete");
     var holder = new Container();
     var tiles = new Tile(
       new Rectangle(50, 50, frame.faint, frame.light).centerReg(),
@@ -194,7 +234,7 @@ frame.on("ready", function () {
     holder.sca(2, 1).center();
     window.tiles = tiles;
     tiles.on("click", function (e) {
-      console.log(e);
+      //console.log(e);
     });
     tiles.on("mouseover", function (e) {
       e.target.color = frame.green;
@@ -360,27 +400,28 @@ frame.on("ready", function () {
       evilHealer.moveToken({
         target: { x: 240, y: 95, tileCol: 4, tileRow: 1 },
       });
-      console.log(
-        frame.assets,
+
+      frame.assets,
         typeof frame.assets,
         Object.keys(frame.assets).length
-      );
+        ;
       console.log("I've reached my final form");
       tokenArray.push(
         evilHero,
-        evilMage,
-        evilRanger,
-        evilHealer,
         goodHero,
-        goodHealer,
         goodMage,
+        evilMage,
+        evilHealer,
+        evilRanger,
+        goodHealer,
         goodRanger
+
       );
 
       tokenArray = shuffle(tokenArray);
       tokenArray[0].turn = true;
-      console.log(tokenArray);
-      console.log(tokenArray[0].name, "Turn", tokenArray[0].team);
+      //console.log(tokenArray);
+      //console.log(tokenArray[0].name, "Turn", tokenArray[0].team);
     }
 
     background.center();
@@ -388,22 +429,7 @@ frame.on("ready", function () {
     wireupEvents();
     updateBoard();
 
-    function updateBoard() {
-      let score = document.querySelector("#evil-scoreboard");
-      let score2 = document.querySelector("#good-scoreboard");
-      score.innerHTML = ``;
-      score2.innerHTML = ``;
-      for (let token of tokenArray) {
-        // if (token.health <= 0) {
-        // tokenArray.remove(tokenArray.indexOf(token))
-        // }
-        if (token.team == "evil") {
-          score.innerHTML += `<li>name:${token.name} Health:${token.health} Attack:${token.attack} </li>`;
-        } else {
-          score2.innerHTML += `<li>name:${token.name} Health:${token.health} Attack:${token.attack} </li>`;
-        }
-      }
-    }
+
 
     var proportion = new Proportion(0, stageH, 1.2, 1.7);
 
@@ -420,8 +446,8 @@ frame.on("ready", function () {
       }
       window.token = token;
       tiles.on("click", function (e) {
-        console.log("I clicked on tile", e.target.tileCol, e.target.tileRow);
-        console.log(e.target);
+        //console.log("I clicked on tile", e.target.tileCol, e.target.tileRow);
+        //console.log(e.target);
         for (let token of tokenArray) {
           // if token has been confirmed to be active, it can be moved
           if (token.active) {
@@ -440,7 +466,7 @@ frame.on("ready", function () {
     function collisionDetection() {
       for (let token of tokenArray) {
         for (let tile of tiles.children) {
-          console.log(token, tile, token.name, tile.tileCol, tile.tileRow);
+          //console.log(token, tile, token.name, tile.tileCol, tile.tileRow);
           tile.color = frame.red;
           // break
         }
@@ -451,7 +477,7 @@ frame.on("ready", function () {
     function seeMoveOptions(token) {
       //for (let token of tokenArray) {
       for (let tile of tiles.children) {
-        console.log(token.position, token.name, tile.tileCol, tile.tileRow);
+        //console.log(token.position, token.name, tile.tileCol, tile.tileRow);
         if (
           (tile.tileCol == token.position.x &&
             tile.tileRow == token.position.y) ||
@@ -472,7 +498,7 @@ frame.on("ready", function () {
           (tile.tileCol == token.position.x &&
             tile.tileRow - 1 == token.position.y)
         ) {
-          console.log("now");
+          //console.log("now");
           //Check if there's a bad guy in there
           tile.canMovehere = true;
           tile.canAttackHere = true;
@@ -493,7 +519,7 @@ frame.on("ready", function () {
     function seeMoveOptionsRm(token) {
       //for (let token of tokenArray) {
       for (let tile of tiles.children) {
-        console.log(token.position, token.name, tile.tileCol, tile.tileRow);
+        //console.log(token.position, token.name, tile.tileCol, tile.tileRow);
         if (
           (tile.tileCol == token.position.x &&
             tile.tileRow == token.position.y) ||
@@ -523,7 +549,7 @@ frame.on("ready", function () {
           (tile.tileCol - 1 == token.position.x &&
             tile.tileRow - 1 == token.position.y)
         ) {
-          console.log("now");
+          //console.log("now");
           //Check if there's a bad guy in there
           tile.canMovehere = true;
           tile.canAttackHere = true;
@@ -543,7 +569,7 @@ frame.on("ready", function () {
     function collisionDetection() {
       for (let token of tokenArray) {
         for (let tile of tiles.children) {
-          console.log(token, tile, token.name, token._bounds, tile._bounds);
+          //console.log(token, tile, token.name, token._bounds, tile._bounds);
           tile.color = frame.red;
           break;
         }
@@ -607,7 +633,7 @@ frame.on("ready", function () {
           (tile.tileCol == token.position.x &&
             tile.tileRow + 3 == token.position.y)
         ) {
-          console.log("now");
+          //console.log("now");
           //Check if there's a bad guy in there
           tile.canMovehere = true;
           tile.canAttackHere = true;
@@ -630,12 +656,12 @@ frame.on("ready", function () {
     function seeAttackOptions(token) {
       //for (let token of tokenArray) {
       //for (let tile of tiles.children) {
-      console.log("now");
+      //console.log("now");
       //Check if there's a bad guy in there
       for (let tok of tokenArray) {
         if (tok.team !== token.team) {
-          console.log(tok, tok.position, tok.team);
-          console.log(token, token.position, token.team);
+          // console.log(tok, tok.turn, tok.active, tok.team);
+          // console.log(token, token.turn, token.active, token.team);
           if (
             (tok.position.x == token.position.x &&
               tok.position.y == token.position.y) ||
@@ -656,7 +682,7 @@ frame.on("ready", function () {
             (tok.position.x == token.position.x &&
               tok.position.y - 1 == token.position.y)
           ) {
-            console.log(tok, tok.team, tok.position, token.position);
+            //console.log(tok, tok.team, tok.position, token.position);
             // tile.canAttackHere = true;
             tok.color = frame.purple;
             tok.inRange = true;
@@ -667,12 +693,12 @@ frame.on("ready", function () {
             );
             tile.color = frame.red;
             tile.canAttackHere = true
-            if (tile.canAttackHere = true) {
-              console.log('one two three')
-              tok.on("click", function () {
-                tok.receiveDamage(token.dealDamage())
-              })
-            }
+            // if (tile.canAttackHere = true && token.turn == true) {
+            //   console.log('one two three')
+            //   tok.on("click", function () {
+            //     tok.receiveDamage(token.dealDamage())
+            //   })
+            // }
           } else {
             tok.color = frame.red;
             tok.inRange = false;
@@ -702,12 +728,12 @@ document.querySelector("#endturn").onclick = function () {
   let index = 0;
   let hero = tokenArray[playersTurn % tokenArray.length];
 
-  console.log(hero);
+  //console.log(hero);
   hero.active = false;
   hero.hasMoved = false;
   hero.hasAttacked = false;
   hero.turn = false;
-  //console.log(tokenArray[playersTurn + 1].name, " -=-=-=-=");
+  ////console.log(tokenArray[playersTurn + 1].name, " -=-=-=-=");
   //let n = tokenArray[playersTurn + 1] ? playersTurn + 1 : 0;
   playersTurn++;
   document.querySelector("#turnPush").innerHTML = `Total players: ${tokenArray.length
@@ -716,7 +742,7 @@ document.querySelector("#endturn").onclick = function () {
     
     Current Player's Turn: ${tokenArray[playersTurn % tokenArray.length].name}`;
 
-  // console.log(
+  // //console.log(
   //     "Next player's turn is ",
   //     tokenArray[playersTurn % tokenArray.length].name,
   //     " TOtal players ",
@@ -725,3 +751,22 @@ document.querySelector("#endturn").onclick = function () {
   tokenArray[playersTurn % tokenArray.length].turn = true;
 
 };
+
+
+function updateBoard() {
+  let score = document.querySelector("#evil-scoreboard");
+  let score2 = document.querySelector("#good-scoreboard");
+  score.innerHTML = ``;
+  score2.innerHTML = ``;
+  for (let token of tokenArray) {
+    // if (token.health <= 0) {
+    // tokenArray.remove(tokenArray.indexOf(token))
+    // }
+    //console.log(token)
+    if (token.team == "evil") {
+      score.innerHTML += `<li>name:${token.name} Health:${token.health} Attack:${token.attack} </li>`;
+    } else {
+      score2.innerHTML += `<li>name:${token.name} Health:${token.health} Attack:${token.attack} </li>`;
+    }
+  }
+}
