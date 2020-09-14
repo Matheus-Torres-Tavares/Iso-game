@@ -49,10 +49,10 @@ frame.on("ready", function () {
     whoAmI() {
       console.log(this.name, this.turn, this.active, this.inRange, this);
 
-      let attacker = null
+      let attacker = null;
       for (let token of tokenArray) {
         if (token.turn && token.name != this.name) {
-          attacker = token
+          attacker = token;
         }
         token.active = false;
       }
@@ -60,9 +60,9 @@ frame.on("ready", function () {
       document.querySelector("#whoami").innerHTML = this.name;
 
       if (attacker) {
-        let smash = this.receiveDamage(attacker.dealDamage())
-        console.log(smash)
-        return "smash"
+        let smash = this.receiveDamage(attacker.dealDamage());
+        console.log(smash);
+        return "smash";
       }
 
       return this.turn;
@@ -78,7 +78,7 @@ frame.on("ready", function () {
       return this.attack;
     }
     receiveDamage(dmg) {
-      console.log(dmg)
+      console.log(dmg);
       if (!this.inRange) {
         alert("You're out of range");
         return;
@@ -88,13 +88,12 @@ frame.on("ready", function () {
         console.log(`${this.name} received ${dmg} points of damage!`);
       } else {
         console.log(`${this.name} has died! RIP.`);
-        this.removeFrom(stage)
+        this.removeFrom(stage);
         tokenArray.forEach((token, index) => {
           if (token.name == this.name) {
-            tokenArray.splice(index, 1)
-          };
-
-        })
+            tokenArray.splice(index, 1);
+          }
+        });
       }
       updateBoard();
     }
@@ -133,10 +132,10 @@ frame.on("ready", function () {
       //console.log(this.name, this.cool, this);
       let turn = super.whoAmI();
       if (turn == "smash") {
-        console.log('test smash')
+        console.log("test smash");
         return;
       }
-      console.log(turn)
+      console.log(turn);
       if (!turn) {
         return alert("Not your turn!");
       }
@@ -145,7 +144,7 @@ frame.on("ready", function () {
       }
       this.active = true; //!this.active
       seeMoveOptionsRm(this);
-      seeAttackOptions(this);
+      seeAttackOptions2(this);
       document.querySelector("#whoami").innerHTML = this.name;
     }
   }
@@ -154,9 +153,9 @@ frame.on("ready", function () {
     whoAmI() {
       //console.log(this.name, this.cool, this);
       let turn = super.whoAmI();
-      console.log(turn)
+      console.log(turn);
       if (turn == "smash") {
-        console.log('test smash')
+        console.log("test smash");
         return;
       }
       if (!turn) {
@@ -167,7 +166,7 @@ frame.on("ready", function () {
       }
       this.active = true; //!this.active
       seeMoveOptionsRm(this);
-      seeAttackOptions(this);
+      seeAttackOptions2(this);
       document.querySelector("#whoami").innerHTML = this.name;
     }
   }
@@ -177,7 +176,7 @@ frame.on("ready", function () {
       //console.log(this.name, this.cool, this);
       let turn = super.whoAmI();
       if (turn == "smash") {
-        console.log('test smash')
+        console.log("test smash");
         return;
       }
       if (!turn) {
@@ -196,9 +195,9 @@ frame.on("ready", function () {
   class Fighter extends Hero {
     whoAmI() {
       let turn = super.whoAmI();
-      console.log(turn)
+      console.log(turn);
       if (turn == "smash") {
-        console.log('test smash')
+        console.log("test smash");
         return;
       }
       if (!turn) {
@@ -401,10 +400,7 @@ frame.on("ready", function () {
         target: { x: 240, y: 95, tileCol: 4, tileRow: 1 },
       });
 
-      frame.assets,
-        typeof frame.assets,
-        Object.keys(frame.assets).length
-        ;
+      frame.assets, typeof frame.assets, Object.keys(frame.assets).length;
       console.log("I've reached my final form");
       tokenArray.push(
         evilHero,
@@ -415,7 +411,6 @@ frame.on("ready", function () {
         evilRanger,
         goodHealer,
         goodRanger
-
       );
 
       tokenArray = shuffle(tokenArray);
@@ -428,8 +423,6 @@ frame.on("ready", function () {
 
     wireupEvents();
     updateBoard();
-
-
 
     var proportion = new Proportion(0, stageH, 1.2, 1.7);
 
@@ -542,8 +535,7 @@ frame.on("ready", function () {
           (tile.tileCol + 1 == token.position.x &&
             tile.tileRow + 1 == token.position.y) ||
           (tile.tileCol - 1 == token.position.x &&
-            tile.tileRow + 1 == token.position.y)
-          ||
+            tile.tileRow + 1 == token.position.y) ||
           (tile.tileCol + 1 == token.position.x &&
             tile.tileRow - 1 == token.position.y) ||
           (tile.tileCol - 1 == token.position.x &&
@@ -692,7 +684,7 @@ frame.on("ready", function () {
                 tile.tileRow === tok.position.y
             );
             tile.color = frame.red;
-            tile.canAttackHere = true
+            tile.canAttackHere = true;
             // if (tile.canAttackHere = true && token.turn == true) {
             //   console.log('one two three')
             //   tok.on("click", function () {
@@ -711,6 +703,75 @@ frame.on("ready", function () {
       //}
       //}
     }
+
+    function seeAttackOptions2(token) {
+      //for (let token of tokenArray) {
+      //for (let tile of tiles.children) {
+      //console.log("now");
+      //Check if there's a bad guy in there
+      for (let tok of tokenArray) {
+        if (tok.team !== token.team) {
+          // console.log(tok, tok.turn, tok.active, tok.team);
+          // console.log(token, token.turn, token.active, token.team);
+          if (
+            (tok.position.x == token.position.x &&
+              tok.position.y == token.position.y) ||
+            (tok.position.x + 1 == token.position.x &&
+              tok.position.y == token.position.y) ||
+            (tok.position.x + 2 == token.position.x &&
+              tok.position.y == token.position.y) ||
+            (tok.position.x + 3 == token.position.x &&
+              tok.position.y == token.position.y) ||
+            (tok.position.x - 1 == token.position.x &&
+              tok.position.y == token.position.y) ||
+            (tok.position.x - 2 == token.position.x &&
+              tok.position.y == token.position.y) ||
+            (tok.position.x - 3 == token.position.x &&
+              tok.position.y == token.position.y) ||
+            (tok.position.x == token.position.x &&
+              tok.position.y - 1 == token.position.y) ||
+            (tok.position.x == token.position.x &&
+              tok.position.y - 2 == token.position.y) ||
+            (tok.position.x == token.position.x &&
+              tok.position.y - 3 == token.position.y) ||
+            (tok.position.x == token.position.x &&
+              tok.position.y + 1 == token.position.y) ||
+            (tok.position.x == token.position.x &&
+              tok.position.y + 2 == token.position.y) ||
+            (tok.position.x == token.position.x &&
+              tok.position.y + 3 == token.position.y)
+          ) {
+            //console.log(tok, tok.team, tok.position, token.position);
+            // tile.canAttackHere = true;
+            tok.color = frame.purple;
+            tok.inRange = true;
+            let tile = tiles.children.find(
+              (tile) =>
+                tile.tileCol === tok.position.x &&
+                tile.tileRow === tok.position.y
+            );
+            tile.color = frame.red;
+            tile.canAttackHere = true;
+            // if (tile.canAttackHere = true && token.turn == true) {
+            //   console.log('one two three')
+            //   tok.on("click", function () {
+            //     tok.receiveDamage(token.dealDamage())
+            //   })
+            // }
+          } else {
+            tok.color = frame.red;
+            tok.inRange = false;
+            // tile.canAttackHere = false;
+            // tile.color = frame.light;
+          }
+        }
+      }
+      // break
+      //}
+      //}
+    }
+
+    window.seeAttackOptions2 = seeAttackOptions2;
     window.seeAttackOptions = seeAttackOptions;
     stage.update();
   });
@@ -736,8 +797,9 @@ document.querySelector("#endturn").onclick = function () {
   ////console.log(tokenArray[playersTurn + 1].name, " -=-=-=-=");
   //let n = tokenArray[playersTurn + 1] ? playersTurn + 1 : 0;
   playersTurn++;
-  document.querySelector("#turnPush").innerHTML = `Total players: ${tokenArray.length
-    } 
+  document.querySelector("#turnPush").innerHTML = `Total players: ${
+    tokenArray.length
+  } 
     <br>
     
     Current Player's Turn: ${tokenArray[playersTurn % tokenArray.length].name}`;
@@ -749,9 +811,7 @@ document.querySelector("#endturn").onclick = function () {
   //     tokenArray.length
   // );
   tokenArray[playersTurn % tokenArray.length].turn = true;
-
 };
-
 
 function updateBoard() {
   let score = document.querySelector("#evil-scoreboard");
