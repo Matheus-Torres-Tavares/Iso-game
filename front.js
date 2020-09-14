@@ -669,10 +669,10 @@ frame.on("ready", function () {
             tile.canAttackHere = true
             if (tile.canAttackHere = true) {
               console.log('one two three')
+              tok.on("click", function () {
+                tok.receiveDamage(token.dealDamage())
+              })
             }
-            tok.on("click", function () {
-              console.log('test')
-            })
           } else {
             tok.color = frame.red;
             tok.inRange = false;

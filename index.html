@@ -2,41 +2,20 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Isometric grid test</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="front.css" />
+    <title>Ergheist</title>
+    <audio autoplay loop="true">
+        <source src="bgm/intro.mp3" type="audio/mpeg">
+    </audio>
 </head>
 
-<body>
-  <div id="whoami">Selected Champion:</div>
-  <div class="board">
-    <div class="goodSide">
-      <h3 class="header">Good Side</h3>
-      <ul id="good-scoreboard"></ul>
-    </div>
-    <div class="evilSide">
-      <h3 class="header">Evil Side</h3>
-      <ul id="evil-scoreboard"></ul>
-    </div>
-    <div class="turnCounter">
-      <h3>Turn Order</h3>
-      <div id="turnPush"></div>
-      <button id="endturn">End Turn</button>
-      <button id="Attack">Attack</button>
-    </div>
-  </div>
-
-  <audio controls volume="20" loop="true">
-    <source src="bgm/battle1.mp3" type="audio/mpeg">
-  </audio>
-  <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
-  <script>
-    var zon = true;
-    var zns = false;
-  </script>
-  <script src="https://zimjs.org/cdn/cat/01/zim.js"></script>
-  <script src="front.js"></script>
+<body class="frontPage">
+    <!-- <embed id="music" src="bgm/intro.mp3" loop="true" hidden="true" volume="40" autostart > </embed> -->
+    <h1 id="title">Ergheist</h1>
+    <h2 id="subtitle">Battle Tactics</h2>
+    <button id="enterButton"> <a href="game.html">Enter Battle</a></button>
 </body>
 
 </html>
