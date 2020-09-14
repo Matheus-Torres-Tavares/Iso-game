@@ -85,9 +85,15 @@ frame.on("ready", function () {
       }
       this.health -= dmg;
       if (this.health > 0) {
-        console.log(`${this.name} received ${dmg} points of damage!`);
+        let message = ``;
+        message += `${this.name} received ${dmg} points of damage!`;
+        console.log(message);
+        document.querySelector(".Message").innerHTML = message;
       } else {
-        console.log(`${this.name} has died! RIP.`);
+        let death = ``;
+        death += `${this.name} has died! RIP.`;
+        console.log(death);
+        document.querySelector(".Message").innerHTML = death;
         this.removeFrom(stage);
         tokenArray.forEach((token, index) => {
           if (token.name == this.name) {
