@@ -26,6 +26,15 @@ frame.on("ready", function () {
   var eMageImg = asset("img/EvilMage.png");
   var eRangerImg = asset("img/EvilRange.png");
   var eHealerImg = asset("img/EvilHealer.png");
+  const smack = new Audio()
+  function playSound() {
+    smack.src = 'bgm/smack.mp3'
+    smack.play()
+  }
+
+
+
+
   // // bgmusic.play();
 
   class Hero extends Sprite {
@@ -89,10 +98,11 @@ frame.on("ready", function () {
         message += `${this.name} received ${dmg} points of damage!`;
         console.log(message);
         document.querySelector(".Message").innerHTML = message;
+        playSound()
       } else {
         let death = ``;
         death += `${this.name} has died! RIP.`;
-        console.log(death);
+        playSound()
         document.querySelector(".Message").innerHTML = death;
         this.removeFrom(stage);
         tokenArray.forEach((token, index) => {
@@ -803,9 +813,8 @@ document.querySelector("#endturn").onclick = function () {
   ////console.log(tokenArray[playersTurn + 1].name, " -=-=-=-=");
   //let n = tokenArray[playersTurn + 1] ? playersTurn + 1 : 0;
   playersTurn++;
-  document.querySelector("#turnPush").innerHTML = `Total players: ${
-    tokenArray.length
-  } 
+  document.querySelector("#turnPush").innerHTML = `Total players: ${tokenArray.length
+    } 
     <br>
     
     Current Player's Turn: ${tokenArray[playersTurn % tokenArray.length].name}`;
