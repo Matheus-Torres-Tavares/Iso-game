@@ -253,8 +253,8 @@ frame.on("ready", function () {
         8,
         1,
         "Arngrim, Champion of the Gauntlet",
-        25,
-        30,
+        35,
+        100,
         "good",
         105,
         110
@@ -274,7 +274,7 @@ frame.on("ready", function () {
         1,
         "Laurel, Sorceress Supreme",
         25,
-        30,
+        60,
         "good",
         65,
         90
@@ -291,8 +291,8 @@ frame.on("ready", function () {
         4,
         1,
         "Freiya, Arcane Archer",
-        25,
-        30,
+        15,
+        75,
         "good",
         70,
         110
@@ -311,8 +311,8 @@ frame.on("ready", function () {
         4,
         1,
         "Priestess of the Light",
-        25,
-        30,
+        5,
+        50,
         "good",
         65,
         95
@@ -331,8 +331,8 @@ frame.on("ready", function () {
         4,
         1,
         "Paragon of Darkness",
-        25,
-        30,
+        35,
+        100,
         "evil",
         108,
         105
@@ -350,7 +350,7 @@ frame.on("ready", function () {
         1,
         "Zazavozz the Umbral Magus",
         25,
-        30,
+        60,
         "evil",
         55,
         110
@@ -367,8 +367,8 @@ frame.on("ready", function () {
         4,
         1,
         "Akama, Ocelot Sniper",
-        25,
-        30,
+        15,
+        75,
         "evil",
         50,
         125
@@ -386,8 +386,8 @@ frame.on("ready", function () {
         4,
         1,
         "Hera, Defiler of Streams",
-        25,
-        30,
+        5,
+        50,
         "evil",
         87,
         105
